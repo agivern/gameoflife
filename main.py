@@ -1,9 +1,7 @@
 import pygame
 import sys
-
-FPS = 60
-RESOLUTION = 720, 480
-COLOR_BLACK = (0,0,0)
+import constant
+from cell import Cell
 
 def eventHandler():
     # Stop the game if the windows is closed
@@ -12,22 +10,29 @@ def eventHandler():
         pygame.quit()
         sys.exit(0)
 
+def renderHandler(oScreen, aCell):
+    oScreen.fill(constant.COLOR_WHITE)
+    for oCell in aCell:
+        oCell.render(oScreen)
+
 def run():
     pygame.init()
-    oScreen = pygame.display.set_mode(RESOLUTION)
+    oScreen = pygame.display.set_mode(constant.RESOLUTION)
     pygame.display.set_caption('gameoflife')
 
     oClock = pygame.time.Clock()
     pygame.key.set_repeat(1, 1)
 
+    aCell = list()
+    aCell.append(Cell(50,50))
+
     while True:
         eventHandler()
-
-        oScreen.fill(COLOR_BLACK)
+        renderHandler(oScreen, aCell)
 
         pygame.display.flip()
 
-        oClock.tick(FPS)
+        oClock.tick(constant.FPS)
 
 if __name__ == "__main__":
     run()
